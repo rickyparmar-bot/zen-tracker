@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zen Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="hero">
+      <p class="eyebrow">focus companion</p>
+      <h1>Zen Tracker</h1>
+      <p class="subtitle">A tiny study buddy so you don't mentally respawn mid-session.</p>
+    </header>
+
+    <main class="dashboard">
+      <section class="timer-card">
+        <h2>Pomodoro Timer</h2>
+        <div class="timer-display" id="timer">25:00</div>
+        <button id="startPauseBtn" class="primary-btn">Start</button>
+      </section>
+
+      <section class="task-card">
+        <h2>Task Tracker</h2>
+        <div class="task-controls">
+          <input type="text" id="taskInput" placeholder="What are you locking in on?" />
+          <select id="prioritySelect">
+            <option value="High">High</option>
+            <option value="Medium" selected>Medium</option>
+            <option value="Low">Low</option>
+          </select>
+          <button id="addTaskBtn" class="secondary-btn">Add Task</button>
+        </div>
+
+        <ul id="taskList" class="task-list"></ul>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

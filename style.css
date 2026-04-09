@@ -1,0 +1,199 @@
+:root {
+  --bg: #0a0a0f;
+  --panel: #12121a;
+  --panel-2: #171721;
+  --text: #f5f7ff;
+  --muted: #9da3b4;
+  --line: rgba(255, 255, 255, 0.08);
+  --glow: #7c5cff;
+  --glow-soft: rgba(124, 92, 255, 0.18);
+  --high: #ff6b81;
+  --medium: #ffd166;
+  --low: #4cd7a7;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", "Segoe UI", sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(circle at top, rgba(124, 92, 255, 0.16), transparent 30%), var(--bg);
+  color: var(--text);
+}
+
+.app-shell {
+  width: min(1100px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 48px 0;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.24rem;
+  color: var(--glow);
+  font-size: 0.78rem;
+  margin-bottom: 12px;
+}
+
+.hero h1 {
+  font-size: clamp(2.4rem, 6vw, 4.4rem);
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: var(--muted);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.timer-card,
+.task-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.32);
+  backdrop-filter: blur(14px);
+}
+
+.timer-card h2,
+.task-card h2 {
+  margin-bottom: 22px;
+}
+
+.timer-display {
+  font-size: clamp(3.5rem, 9vw, 6rem);
+  text-align: center;
+  margin: 24px 0;
+  font-weight: 700;
+  letter-spacing: 0.08rem;
+  text-shadow: 0 0 25px var(--glow-soft);
+}
+
+button,
+input,
+select {
+  border: none;
+  outline: none;
+  border-radius: 14px;
+  font-size: 1rem;
+}
+
+button {
+  cursor: pointer;
+  transition: transform 0.18s ease, opacity 0.18s ease, box-shadow 0.18s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  opacity: 0.96;
+}
+
+.primary-btn,
+.secondary-btn {
+  padding: 14px 18px;
+  width: 100%;
+  font-weight: 600;
+}
+
+.primary-btn {
+  background: var(--glow);
+  color: white;
+  box-shadow: 0 10px 30px var(--glow-soft);
+}
+
+.secondary-btn {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+}
+
+.task-controls {
+  display: grid;
+  gap: 12px;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--panel-2);
+  color: var(--text);
+  border: 1px solid var(--line);
+}
+
+.task-list {
+  list-style: none;
+  margin-top: 20px;
+  display: grid;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  padding: 14px 16px;
+  border-radius: 16px;
+}
+
+.task-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.priority-badge {
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.priority-high {
+  background: rgba(255, 107, 129, 0.18);
+  color: var(--high);
+}
+
+.priority-medium {
+  background: rgba(255, 209, 102, 0.18);
+  color: var(--medium);
+}
+
+.priority-low {
+  background: rgba(76, 215, 167, 0.18);
+  color: var(--low);
+}
+
+.empty-state {
+  color: var(--muted);
+  text-align: center;
+  padding: 18px;
+  border: 1px dashed var(--line);
+  border-radius: 16px;
+}
+
+@media (max-width: 800px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+}
