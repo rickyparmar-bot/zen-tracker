@@ -8,21 +8,39 @@
 </head>
 <body>
   <div class="app-shell">
+    <div class="window-bar" aria-hidden="true">
+      <div class="window-dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <p class="window-title">zen-tracker :: tty-session</p>
+    </div>
+
+    <aside class="sys-meta" aria-label="System metadata">
+      <p>OS: CachyOS</p>
+      <p>Kernel: 6.x-zen</p>
+      <p>WM: Hyprland</p>
+    </aside>
+
     <header class="hero">
-      <p class="eyebrow">focus companion</p>
+      <p class="eyebrow">focus engine</p>
       <h1>Zen Tracker</h1>
-      <p class="subtitle">A tiny study buddy so you don't mentally respawn mid-session.</p>
+      <p class="subtitle">Minimal session control panel for lock-in mode.</p>
     </header>
 
     <main class="dashboard">
       <section class="timer-card">
-        <h2>Pomodoro Timer</h2>
-        <div class="timer-display" id="timer">25:00</div>
-        <button id="startPauseBtn" class="primary-btn">Start</button>
+        <h2>Session Timer</h2>
+        <div class="timer-shell" role="status" aria-live="polite">
+          <p class="timer-label">[ pomodoro:25m ]</p>
+          <p class="timer-display"><span id="timer">25:00</span></p>
+        </div>
+        <button id="startPauseBtn" class="primary-btn">[ RUN ]</button>
       </section>
 
       <section class="task-card">
-        <h2>Task Tracker</h2>
+        <h2>Task Queue</h2>
         <div class="task-controls">
           <input type="text" id="taskInput" placeholder="What are you locking in on?" />
           <select id="prioritySelect">
@@ -30,12 +48,18 @@
             <option value="Medium" selected>Medium</option>
             <option value="Low">Low</option>
           </select>
-          <button id="addTaskBtn" class="secondary-btn">Add Task</button>
+          <button id="addTaskBtn" class="secondary-btn">[ ENQUEUE ]</button>
         </div>
 
         <ul id="taskList" class="task-list"></ul>
       </section>
     </main>
+
+    <footer class="terminal-footer" aria-label="Terminal prompt">
+      <label class="terminal-label" for="terminalInput">root@wizrizz:~/zen-tracker#</label>
+      <input id="terminalInput" class="terminal-input" type="text" autocomplete="off" placeholder="type help" />
+      <p id="terminalOutput" class="terminal-output">$ ready. type "help" for commands.</p>
+    </footer>
   </div>
 
   <script src="app.js"></script>
