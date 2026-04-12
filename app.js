@@ -1,5 +1,8 @@
 const timerDisplay = document.getElementById("timer");
+const timerLabel = document.getElementById("timerLabel");
 const startPauseBtn = document.getElementById("startPauseBtn");
+const timerMinutesInput = document.getElementById("timerMinutesInput");
+const applyTimerBtn = document.getElementById("applyTimerBtn");
 const taskInput = document.getElementById("taskInput");
 const prioritySelect = document.getElementById("prioritySelect");
 const addTaskBtn = document.getElementById("addTaskBtn");
@@ -7,15 +10,17 @@ const taskList = document.getElementById("taskList");
 const terminalInput = document.getElementById("terminalInput");
 const terminalOutput = document.getElementById("terminalOutput");
 
-const pomodoroLength = 25 * 60;
-let timeLeft = pomodoroLength;
+let sessionLengthSeconds = 25 * 60;
+let timeLeft = sessionLengthSeconds;
 let timerInterval = null;
 let isRunning = false;
+let alarmAudioContext = null;
 // Keeps the shell output feeling like a tiny transcript instead of one dead line.
 const terminalHistory = ['$ ready. type "help" for commands.'];
 
 renderEmptyState();
 updateTimerDisplay();
+updateTimerLabel();
 
 function updateTimerDisplay() {
   // Plain math, because the timer does not need to be clever.
@@ -37,10 +42,78 @@ function startTimer() {
     clearInterval(timerInterval);
     isRunning = false;
     startPauseBtn.textContent = "[ RUN ]";
-    timeLeft = pomodoroLength;
+    timeLeft = sessionLengthSeconds;
     updateTimerDisplay();
-    alert("Pomodoro done. Take a breather and come back swinging.");
+    playTimesUpAlarm();
+    setTerminalOutput("time's up. session complete.");
+    setTimeout(() => {
+      alert("Pomodoro done. Take a breather and come back swinging.");
+    }, 250);
   }, 1000);
+}
+
+function playTimesUpAlarm() {
+  const AudioCtx = window.AudioContext || window.webkitAudioContext;
+  if (!AudioCtx) {
+    return;
+  }
+
+  if (!alarmAudioContext) {
+    alarmAudioContext = new AudioCtx();
+  }
+
+  if (alarmAudioContext.state === "suspended") {
+    alarmAudioContext.resume().catch(() => {
+      // If browser blocks resume here, alert fallback still notifies the user.
+    });
+  }
+
+  const now = alarmAudioContext.currentTime;
+  const beepCount = 3;
+
+  for (let i = 0; i < beepCount; i += 1) {
+    const startAt = now + i * 0.24;
+    const oscillator = alarmAudioContext.createOscillator();
+    const gainNode = alarmAudioContext.createGain();
+
+    oscillator.type = "square";
+    oscillator.frequency.setValueAtTime(920, startAt);
+
+    gainNode.gain.setValueAtTime(0.0001, startAt);
+    gainNode.gain.exponentialRampToValueAtTime(0.12, startAt + 0.02);
+    gainNode.gain.exponentialRampToValueAtTime(0.0001, startAt + 0.16);
+
+    oscillator.connect(gainNode);
+    gainNode.connect(alarmAudioContext.destination);
+
+    oscillator.start(startAt);
+    oscillator.stop(startAt + 0.17);
+  }
+}
+
+function updateTimerLabel() {
+  const minutes = Math.floor(sessionLengthSeconds / 60);
+  timerLabel.textContent = `[ pomodoro:${minutes}m ]`;
+}
+
+function applyCustomTimerMinutes() {
+  if (isRunning) {
+    setTerminalOutput("pause timer before changing minutes");
+    return;
+  }
+
+  const minutes = Number.parseInt(timerMinutesInput.value, 10);
+  if (Number.isNaN(minutes) || minutes < 1 || minutes > 180) {
+    alert("Pick a value between 1 and 180 minutes.");
+    timerMinutesInput.value = String(Math.floor(sessionLengthSeconds / 60));
+    return;
+  }
+
+  sessionLengthSeconds = minutes * 60;
+  timeLeft = sessionLengthSeconds;
+  updateTimerLabel();
+  updateTimerDisplay();
+  setTerminalOutput(`timer set to ${minutes} minute(s)`);
 }
 
 function toggleTimer() {
@@ -152,7 +225,7 @@ function runTerminalCommand(command) {
   const action = parts[0].toLowerCase();
 
   if (action === "help") {
-    setTerminalOutput("commands: run | pause | reset | add <task> [high|medium|low]");
+    setTerminalOutput("commands: run | pause | reset | set <minutes> | add <task> [high|medium|low]");
     return;
   }
 
@@ -182,10 +255,22 @@ function runTerminalCommand(command) {
       isRunning = false;
     }
 
-    timeLeft = pomodoroLength;
+    timeLeft = sessionLengthSeconds;
     startPauseBtn.textContent = "[ RUN ]";
     updateTimerDisplay();
-    setTerminalOutput("timer reset to 25:00");
+    setTerminalOutput(`timer reset to ${String(Math.floor(sessionLengthSeconds / 60)).padStart(2, "0")}:00`);
+    return;
+  }
+
+  if (action === "set") {
+    const minutes = Number.parseInt(parts[1], 10);
+    if (Number.isNaN(minutes)) {
+      setTerminalOutput("usage: set <minutes>");
+      return;
+    }
+
+    timerMinutesInput.value = String(minutes);
+    applyCustomTimerMinutes();
     return;
   }
 
@@ -214,5 +299,13 @@ terminalInput.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
     runTerminalCommand(terminalInput.value);
     terminalInput.value = "";
+  }
+});
+
+applyTimerBtn.addEventListener("click", applyCustomTimerMinutes);
+
+timerMinutesInput.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    applyCustomTimerMinutes();
   }
 });

@@ -16,9 +16,11 @@ The UI is intentionally sharp, monospace, and high-contrast. It sits nicely in a
 ------------------------
 
 - Hardcore Pomodoro: a strict 25-minute countdown. No soft alarms, just the clock and your discipline.
+- Custom Session Length: set your own timer duration (1 to 180 minutes) from the UI or terminal.
 - Task Queueing: enqueue whatever you’re locking in on.
 - Priority Tags: minimalist [LOW], [MEDIUM], [HIGH] tags for each task.
-- Terminal Commands: use the built-in command bar for `help`, `run`, `pause`, `reset`, and `add`.
+- Terminal Commands: use the built-in command bar for `help`, `run`, `pause`, `reset`, `set`, and `add`.
+- Times-Up Alarm: plays a short beep pattern when a session ends, with alert fallback.
 
 🧱 Current State
 ---------------
@@ -64,6 +66,7 @@ http://localhost:8000
 - `run` / `start` - begin the timer.
 - `pause` / `stop` - pause the timer.
 - `reset` - reset the timer back to 25:00.
+- `set <minutes>` - set session duration (for example: `set 45`).
 - `add <task> [high|medium|low]` - queue a task from the terminal prompt.
 
 🧠 Notes
@@ -77,5 +80,4 @@ http://localhost:8000
 -----------
 
 - Add localStorage so tasks persist after refresh.
-- Add configurable timer lengths.
 - Add optional browser notifications.
