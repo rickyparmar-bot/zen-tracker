@@ -42,6 +42,46 @@
           <button id="applyTimerBtn" class="secondary-btn">[ APPLY ]</button>
         </div>
         <button id="startPauseBtn" class="primary-btn">[ RUN ]</button>
+        <div class="notification-controls">
+          <label class="notification-toggle" for="browserNotificationToggle">
+            <input id="browserNotificationToggle" type="checkbox" />
+            <span>Browser notifications</span>
+          </label>
+          <p id="notificationPermissionHint" class="notification-hint">In-app notifications are always on.</p>
+        </div>
+        <div class="notification-controls">
+          <label class="notification-toggle" for="lofiMusicToggle">
+            <input id="lofiMusicToggle" type="checkbox" />
+            <span>Lofi focus track</span>
+          </label>
+          <p id="lofiMusicHint" class="notification-hint">Soft ambience starts when the timer is running.</p>
+        </div>
+        <div class="notification-controls">
+          <label class="notification-toggle" for="ambientSoundSelect">
+            <span>Focus sound</span>
+          </label>
+          <select id="ambientSoundSelect" class="control-select" aria-label="Select focus sound">
+            <option value="lofi">Lofi beat</option>
+            <option value="rain">Rain</option>
+            <option value="fire">Fire</option>
+            <option value="forest">Forest</option>
+          </select>
+          <p id="ambientSoundHint" class="notification-hint">Choose the background texture that runs with your sessions.</p>
+        </div>
+        <div class="notification-controls">
+          <label class="notification-toggle" for="themeSelect">
+            <span>Theme</span>
+          </label>
+          <select id="themeSelect" class="control-select" aria-label="Select website theme">
+            <option value="violet">Violet</option>
+            <option value="ocean">Ocean</option>
+            <option value="ember">Ember</option>
+            <option value="forest">Forest</option>
+            <option value="mono">Mono</option>
+          </select>
+          <p id="themeHint" class="notification-hint">Pick a color scheme that fits your vibe.</p>
+        </div>
+        <div id="inAppNotification" class="in-app-notification" role="status" aria-live="polite" hidden></div>
       </section>
 
       <section class="task-card">
@@ -57,6 +97,48 @@
         </div>
 
         <ul id="taskList" class="task-list"></ul>
+      </section>
+
+      <section class="insights-card">
+        <div class="insights-header">
+          <div>
+            <h2>Streaks + History</h2>
+            <p class="card-copy">Your recent focus trail, saved locally in this browser.</p>
+          </div>
+        </div>
+
+        <div class="insights-grid">
+          <div class="streak-metrics" aria-label="Focus streak metrics">
+            <article class="metric-block">
+              <p class="metric-label">Current streak</p>
+              <p class="metric-value"><span id="currentStreakValue">0</span><span class="metric-unit">days</span></p>
+            </article>
+
+            <article class="metric-block">
+              <p class="metric-label">Best streak</p>
+              <p class="metric-value"><span id="bestStreakValue">0</span><span class="metric-unit">days</span></p>
+            </article>
+
+            <article class="metric-block">
+              <p class="metric-label">Sessions today</p>
+              <p class="metric-value"><span id="sessionsTodayValue">0</span><span class="metric-unit">done</span></p>
+            </article>
+
+            <article class="metric-block">
+              <p class="metric-label">Focus logged</p>
+              <p class="metric-value"><span id="focusMinutesValue">0</span><span class="metric-unit">mins</span></p>
+            </article>
+          </div>
+
+          <div class="history-panel">
+            <div class="history-header">
+              <p class="metric-label">Recent sessions</p>
+              <p id="historySummary" class="history-summary">No sessions logged yet.</p>
+            </div>
+
+            <ul id="sessionHistoryList" class="history-list" aria-live="polite"></ul>
+          </div>
+        </div>
       </section>
     </main>
 

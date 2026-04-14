@@ -1,4 +1,4 @@
-█ ZEN-TRACKER (v1.0.4)
+█ ZEN-TRACKER (v1.2.0)
 ================================
 
 A minimal, TUI-driven focus engine for purists.
@@ -15,20 +15,25 @@ The UI is intentionally sharp, monospace, and high-contrast. It sits nicely in a
 🚀 What It Actually Does
 ------------------------
 
-- Hardcore Pomodoro: a strict 25-minute countdown. No soft alarms, just the clock and your discipline.
-- Custom Session Length: set your own timer duration (1 to 180 minutes) from the UI or terminal.
-- Task Queueing: enqueue whatever you’re locking in on.
-- Priority Tags: minimalist [LOW], [MEDIUM], [HIGH] tags for each task.
-- Terminal Commands: use the built-in command bar for `help`, `run`, `pause`, `reset`, `set`, and `add`.
-- Times-Up Alarm: plays a short beep pattern when a session ends, with alert fallback.
+- Pomodoro + Custom Sessions: run strict sessions and set durations from 1 to 180 minutes.
+- Persistent Timer State: if you refresh mid-session, the countdown resumes from saved state.
+- Task Queue + Priority Tags: enqueue tasks with [LOW], [MEDIUM], [HIGH] labels.
+- Local Persistence: timer, tasks, theme, audio mode, and preferences stay saved in-browser.
+- In-App Notifications: completion and control feedback in the UI, not just blocking system dialogs.
+- Optional Browser Notifications: can be enabled and permission-gated from the app.
+- Ambient Focus Audio: choose between `lofi`, `rain`, `fire`, and `forest` while tracking.
+- Theme Customization: switch between `violet`, `ocean`, `ember`, `forest`, and `mono` palettes.
+- Streaks + History: tracks focus minutes, sessions today, and streak metrics from completed sessions.
+- Terminal Commands: command bar supports `help`, `run`, `pause`, `reset`, `set`, and `add`.
+- Custom Cursor Effect: animated cursor trail on supported desktop pointers.
 
 🧱 Current State
 ---------------
 
-- The layout is intentionally terminal-inspired and currently uses a monospace, high-contrast palette.
-- Tasks are still local to the session for now.
-- The terminal prompt is functional, but it’s still a UI layer, not a real shell.
-- There is no backend, no login, and no sync.
+- Terminal-inspired layout with configurable theme presets.
+- Local-only data model (no backend, no accounts, no sync).
+- Runtime audio synthesis for ambience and alarm (no external audio assets required).
+- Browser support can vary for autoplay policy and notification permissions.
 
 🪦 The Struggles / Bugs That Almost Killed Me
 --------------------------------------------
@@ -79,5 +84,6 @@ http://localhost:8000
 🗺 Next Steps
 -----------
 
-- Add localStorage so tasks persist after refresh.
-- Add optional browser notifications.
+- Add volume and ambience intensity controls.
+- Add export/import for local data (tasks + session history).
+- Add favicon + launch-ready PWA metadata.
