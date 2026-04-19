@@ -87,3 +87,6 @@ http://localhost:8000
 - Add volume and ambience intensity controls.
 - Add export/import for local data (tasks + session history).
 - Add favicon + launch-ready PWA metadata.
+
+
+*AI was used*
